@@ -38,3 +38,29 @@ func TestSplitBufIntoLines(t *testing.T) {
 		t.Errorf("expected 'c', got %s", lines[2])
 	}
 }
+
+func TestJsonCompactify(t *testing.T) {
+	in := `{"a": 1,
+"b": 2}`
+	out, err := JsonCompactify(in)
+	if err != nil {
+		t.Fatalf("error compactifying json, got error %v", err)
+	}
+	if out != `{"a":1,"b":2}` {
+		t.Errorf("expected '{\"a\":1,\"b\":2}', got %s", out)
+	}
+}
+
+func TestJsonPrettify(t *testing.T) {
+	in := `{"a":1,"b":2}`
+	out, err := JsonPrettify(in)
+	if err != nil {
+		t.Fatalf("error prettifying json, got error %v", err)
+	}
+	if out != `{
+  "a": 1,
+  "b": 2
+}` {
+		t.Errorf("expected '{\n  \"a\": 1,\n  \"b\": 2\n}', got %s", out)
+	}
+}
